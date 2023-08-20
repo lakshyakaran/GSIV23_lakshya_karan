@@ -4,12 +4,11 @@ interface Props {
     children: any;
 }
 
-const Conatiner = (props: Props) => {
+const Container = (props: Props) => {
     const { children } = props;
     return (
         <div className="main">
             <Navigation
-                onHomeClick={null}
                 onSearchClick={null}
                 onSearchChange={null}
             >
@@ -19,4 +18,4 @@ const Conatiner = (props: Props) => {
     )
 }
 
-export default Conatiner
+export default Container

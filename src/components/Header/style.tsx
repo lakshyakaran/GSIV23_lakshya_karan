@@ -7,7 +7,22 @@ const useStyle = makeStyles((theme: any) => ({
         backgroundColor: '#FFF'
     },
     homeIcon: {
-        color: '#000 !important'
+        color: '#4A4A4A !important'
+    },
+    movieDetails: {
+        fontSize: '14px !important',
+        fontWeight: '600 !important',
+        color: '#4A4A4A !important'
+    },
+    Main: {
+        flexGrow: 1,
+        padding: '8px 16px'
+    },
+    w100: {
+        width: '100%'
+    },
+    dFlex: {
+        display: 'flex'
     }
 }));
 
