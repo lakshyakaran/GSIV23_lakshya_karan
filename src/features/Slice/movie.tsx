@@ -1,8 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Movie {
+interface MovieList {
     id: number;
     title: string;
+    poster_path: string;
+    overview: string;
+    vote_average: string;
+}
+
+interface Movie {
+    result: MovieList[];
 }
 
 interface MoviesState {
@@ -17,7 +24,7 @@ const movies = createSlice({
     name: "movies",
     initialState,
     reducers: {
-        setMovies: (state: any, action: PayloadAction<Movie[]>) => {
+        setMovies: (state: any, action: PayloadAction<Movie>) => {
             state.moviesList = action.payload;
         },
         resetMovies: () => initialState,
