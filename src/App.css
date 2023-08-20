@@ -6,6 +6,21 @@
   height: 40vmin;
   pointer-events: none;
 }
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-formControl {
+  height: 40px;
+ width: 100%;
+  border-radius: 8px;
+  background-color: #DFDFDF;
+  border-color: #DFDFDF
+}
+.MuiInputBase-root.MuiOutlinedInput-root.Mui-focused.MuiInputBase-colorPrimary.MuiInputBase-formControl {
+  border-color: #DFDFDF !important;
+}
+
+.MuiFormControl-root.MuiTextField-root {
+  width:40%;
+  border-color: #DFDFDF
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
