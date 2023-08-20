@@ -5,7 +5,8 @@ const useStyle = makeStyles((theme: any) => ({
         borderRadius: '10px'
     },
     blankImg: {
-        height: '250px', backgroundColor: '#DFDFDF'
+        height: '250px',
+        backgroundColor: '#DFDFDF'
     },
     spacing: {
         padding: '5px 5px 10px 5px'
@@ -16,10 +17,16 @@ const useStyle = makeStyles((theme: any) => ({
     },
     movieTitle: {
         fontSize: '14px !important',
+        color: '#4A4A4A !important',
         fontWeight: '600 !important'
     },
     movieDescription: {
         fontSize: '14px !important',
+        color: '#4A4A4A !important'
+    },
+    movieRating: {
+        fontSize: '14px !important',
+        color: '#9B9B9B !important'
     }
 }));
 

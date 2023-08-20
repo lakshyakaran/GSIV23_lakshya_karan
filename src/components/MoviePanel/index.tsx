@@ -6,13 +6,14 @@ interface Props {
     rating: any;
     description: any;
     moviePoster: any;
+    onBoxClick: any;
 }
 
 const MoviePanel = (props: Props) => {
-    const { movieTitle, rating, description, moviePoster } = props;
+    const { movieTitle, rating, description, moviePoster, onBoxClick } = props;
     const classes = useStyle();
     return (
-        <Paper className={classes.border}>
+        <Paper className={classes.border} onClick={onBoxClick}>
             <Box>
                 <Box className={classes.blankImg}>
                     {moviePoster}
@@ -24,7 +25,7 @@ const MoviePanel = (props: Props) => {
                         <Typography className={classes.movieTitle}>
                             {movieTitle}
                         </Typography>
-                        <Typography className={classes.movieDescription}>
+                        <Typography className={classes.movieRating}>
                             {rating}
                         </Typography>
                     </Box>

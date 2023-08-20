@@ -1,43 +1,48 @@
-import { Toolbar, Box, AppBar, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Toolbar, Box, AppBar, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { Home, Search } from '@mui/icons-material';
 import useStyle from './style';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Props {
     children: any;
-    onHomeClick: any;
     onSearchClick: any;
     onSearchChange: any;
 }
 
 export default function Navigation(props: Props) {
-    const { children, onHomeClick, onSearchClick, onSearchChange } = props;
+    const { children, onSearchClick, onSearchChange } = props;
     const classes = useStyle();
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box className={classes.dFlex}>
             <AppBar position="fixed">
                 <Toolbar
                     className={classes.toolBar}>
-                    <Box
-                        sx={{ width: '100%' }}
-                    >
-                        <TextField
-                            placeholder="Search"
-                            id="outlined-start-adornment"
-                            onChange={(event: any) => onSearchChange(event)}
-                            InputProps={{
-                                startAdornment:
-                                    <InputAdornment position="start"
-                                        onClick={onSearchClick}
-                                    >
-                                        <Search />
-                                    </InputAdornment>,
-                            }}
-                        />
-
+                    <Box className={classes.w100}>
+                        {
+                            pathname === '/' ? (
+                                <TextField
+                                    placeholder="Search"
+                                    id="outlined-start-adornment"
+                                    onChange={(event: any) => onSearchChange(event)}
+                                    InputProps={{
+                                        startAdornment:
+                                            <InputAdornment position="start"
+                                                onClick={onSearchClick}
+                                            >
+                                                <Search />
+                                            </InputAdornment>,
+                                    }}
+                                />
+                            ) : (
+                                <Typography className={classes.movieDetails}>Movie Details</Typography>
+                            )
+                        }
                     </Box>
                     <IconButton
-                        onClick={onHomeClick}
+                        onClick={() => navigate(`/`)}
                         className={classes.homeIcon}
                     >
                         <Home />
@@ -46,12 +51,11 @@ export default function Navigation(props: Props) {
             </AppBar>
             <Box
                 component="main"
-                sx={{ flexGrow: 1, p: 3 }}
+                className={classes.Main}
             >
                 <Toolbar />
                 {children}
             </Box>
-
         </Box>
     );
 }
