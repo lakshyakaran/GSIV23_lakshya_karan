@@ -2,7 +2,18 @@ import { makeStyles } from "@mui/styles";
 
 const useStyle = makeStyles((theme: any) => ({
     border: {
-        borderRadius: '10px'
+        borderRadius: '10px',
+        '&::-webkit-scrollbar-track': {
+            boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00) !important',
+            webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00) !important'
+        },
+        '&::-webkit-scrollbar': {
+            width: '2px !important'
+        },
+        '&::-webkit-scrollbar-thumb': {
+        },
+        overflowY: 'auto',
+        maxHeight: '370px'
     },
     blankImg: {
         height: '250px',
