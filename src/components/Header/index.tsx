@@ -26,7 +26,7 @@ export default function Navigation(props: Props) {
                                 <TextField
                                     placeholder="Search"
                                     id="outlined-start-adornment"
-                                    onChange={(event: any) => onSearchChange(event)}
+                                    onChange={(event: any) => onSearchChange(event.target.value)}
                                     InputProps={{
                                         startAdornment:
                                             <InputAdornment position="start"

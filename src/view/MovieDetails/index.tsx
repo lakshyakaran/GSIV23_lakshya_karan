@@ -1,9 +1,9 @@
 import Container from '../../components/Container';
-import { Box, Typography, Grid ,Skeleton} from '@mui/material';
+import { Box, Typography, Grid, Skeleton } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import useStyle from './style';
 import useApi from '../../hook/UseFetch';
-
+import moment from 'moment'
 
 interface MovieList {
     id: number;
@@ -12,7 +12,8 @@ interface MovieList {
     overview: string;
     vote_average: string;
     release_date: string;
-    runtime: string;
+    status: string;
+    runtime: any;
 }
 
 
@@ -25,7 +26,7 @@ const MovieDetails = () => {
     const { data, loading } = useApi<MovieList>(apiUrl);
 
     const renderLoading = () => {
-        return(
+        return (
             <Grid container spacing={2}>
                 <Grid item lg={2} md={2}>
                     <Box className={classes.blankImg}>
@@ -35,26 +36,26 @@ const MovieDetails = () => {
                     <Box className={classes.column}>
                         <Box className={classes.dCenter}>
                             <Typography className={classes.movieTitle}>
-                            <Skeleton />
+                                <Skeleton width={50} />
                             </Typography>
                             <Typography className={classes.movieRating}>
-                            <Skeleton />
+                                <Skeleton width={50} />
                             </Typography>
                         </Box>
                         <Box className={classes.dCenter}>
                             <Typography className={classes.movieDesc}>
-                            <Skeleton />
+                                <Skeleton width={50} />
                             </Typography>
                             <Typography className={`${classes.movieDesc} ${classes.ml5}`}>
-                            <Skeleton />
+                                <Skeleton width={50} />
                             </Typography>
                             <Typography className={`${classes.movieDesc} ${classes.ml5}`}>
-                            <Skeleton />
+                                <Skeleton width={50} />
                             </Typography>
                         </Box>
                         <Box className={classes.dFlex}>
                             <Typography className={classes.movieDesc}>
-                            <Skeleton />
+                                <Skeleton width={50} />
                             </Typography>
                         </Box>
                     </Box>
@@ -62,9 +63,9 @@ const MovieDetails = () => {
             </Grid>
         )
     };
-    
+
     const renderContent = () => {
-        return(
+        return (
             <Grid container spacing={2}>
                 <Grid item lg={2} md={2}>
                     <Box className={classes.blankImg}>
@@ -74,26 +75,26 @@ const MovieDetails = () => {
                     <Box className={classes.column}>
                         <Box className={classes.dCenter}>
                             <Typography className={classes.movieTitle}>
-                            {data?.title}
+                                {data?.title}
                             </Typography>
                             <Typography className={classes.movieRating}>
-                            ({data?.vote_average})
+                                ({data?.vote_average})
                             </Typography>
                         </Box>
                         <Box className={classes.dCenter}>
                             <Typography className={classes.movieDesc}>
-                            {data?.release_date}
+                                {moment(data?.release_date).format('DD-MM-YYYY')} |
                             </Typography>
                             <Typography className={`${classes.movieDesc} ${classes.ml5}`}>
-                            {data?.runtime}
+                                {convertMinutesToHours(data?.runtime)} |
                             </Typography>
                             <Typography className={`${classes.movieDesc} ${classes.ml5}`}>
-                            <Skeleton />
+                                {data?.status}
                             </Typography>
                         </Box>
                         <Box className={classes.dFlex}>
                             <Typography className={classes.movieDesc}>
-                            {data?.overview}
+                                {data?.overview}
                             </Typography>
                         </Box>
                     </Box>
@@ -103,16 +104,29 @@ const MovieDetails = () => {
     };
 
     return (
-        <Container>
+        <Container
+            onSearchClick={null}
+            onSearchChange={null}
+        >
             {
                 loading ? (
                     renderLoading()
-                ):(
+                ) : (
                     renderContent()
                 )
             }
         </Container>
     )
+}
+
+function convertMinutesToHours(minutes: string): string {
+    const hours = Math.floor(parseInt(minutes) / 60);
+    const remainingMinutes = parseInt(minutes) % 60;
+
+    const hoursText = hours > 0 ? `${hours}h` : '';
+    const minutesText = remainingMinutes > 0 ? `${remainingMinutes}m` : '';
+
+    return `${hoursText}:${minutesText}`.trim();
 }
 
 export default MovieDetails
