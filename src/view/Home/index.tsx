@@ -24,8 +24,8 @@ const Home = () => {
     const dispatch = useDispatch();
     const { moviesList } = useSelector((state: any) => state?.movies);
     let apiUrl = 'https://api.themoviedb.org/3/discover/movie';
-    const { data, loading, error } = useApi<Item>(apiUrl);
-    console.log("moviesList", moviesList)
+    const { data, loading } = useApi<Item>(apiUrl);
+    
     useEffect(() => {
         if (data) {
             dispatch(setMovies(data))
