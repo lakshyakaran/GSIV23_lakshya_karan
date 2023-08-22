@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setMovies } from '../../features/Slice/movie';
 import { retrieveSearch } from '../../api/Search';
 import { movieList } from '../../api/MovieList';
-import { Poster1, Poster10, Poster11, Poster12, Poster13, Poster14, Poster15, Poster2, Poster3, Poster4, Poster5, Poster6, Poster7, Poster8, Poster9 } from '../../assets/images';
 
 
 
@@ -17,7 +16,7 @@ const Home = () => {
     const [searchValue, setSearchValue] = useState('')
     const [loading, setLoading] = useState(true)
     const { moviesList } = useSelector((state: any) => state?.movies);
-
+    let posterurl = 'https://image.tmdb.org/t/p/w185'
 
     useEffect(() => {
         if (searchValue === '') {
@@ -87,8 +86,7 @@ const Home = () => {
                                 rating={(item.vote_average)}
                                 description={item.overview}
                                 moviePoster={
-                                    // <img src={`${apiUrl}${item.poster_path}`} />
-                                    <img src={images[index]} alt={`Poster-${index} `} style={{ width: '100%', height: '100%' }} />
+                                    <img alt={`Poster-${index} `} src={`${posterurl}${item.poster_path}`} style={{ width: '100%', height: '100%' }} />
                                 }
                             />
                         </Grid>
@@ -128,23 +126,5 @@ const Home = () => {
     )
 }
 
-
-let images = [
-    Poster1,
-    Poster2,
-    Poster3,
-    Poster4,
-    Poster5,
-    Poster6,
-    Poster7,
-    Poster8,
-    Poster9,
-    Poster10,
-    Poster11,
-    Poster12,
-    Poster13,
-    Poster14,
-    Poster15
-]
 
 export default Home

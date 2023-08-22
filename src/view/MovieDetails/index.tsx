@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import useStyle from './style';
 import useApi from '../../hook/UseFetch';
 import moment from 'moment';
-import { Poster1, Poster10, Poster11, Poster12, Poster13, Poster14, Poster15, Poster2, Poster3, Poster4, Poster5, Poster6, Poster7, Poster8, Poster9 } from '../../assets/images';
 
 interface MovieList {
     id: number;
@@ -24,9 +23,8 @@ const MovieDetails = () => {
     const classes = useStyle();
     const { movieId } = useParams();
     let apiUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+    let posterurl = 'https://image.tmdb.org/t/p/w185'
     const { data, loading } = useApi<MovieList>(apiUrl);
-    let randomIndex = Math.floor(Math.random() * images.length);
-    let randomPoster = images[randomIndex];
 
     const renderLoading = () => {
         return (
@@ -72,7 +70,7 @@ const MovieDetails = () => {
             <Grid container spacing={2}>
                 <Grid item lg={2} md={2}>
                     <Box className={classes.image}>
-                        <img src={randomPoster} alt="poster" style={{ width: '100%' }} />
+                        <img alt="poster" src={`${posterurl}${data?.poster_path}`} style={{ width: '100%' }} />
                     </Box>
                 </Grid>
                 <Grid item lg={6} md={6}>
@@ -133,22 +131,5 @@ function convertMinutesToHours(minutes: string): string {
     return `${hoursText}:${minutesText}`.trim();
 };
 
-let images = [
-    Poster1,
-    Poster2,
-    Poster3,
-    Poster4,
-    Poster5,
-    Poster6,
-    Poster7,
-    Poster8,
-    Poster9,
-    Poster10,
-    Poster11,
-    Poster12,
-    Poster13,
-    Poster14,
-    Poster15
-]
 
 export default MovieDetails
