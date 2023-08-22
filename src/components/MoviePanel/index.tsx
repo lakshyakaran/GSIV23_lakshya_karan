@@ -12,6 +12,7 @@ interface Props {
 const MoviePanel = (props: Props) => {
     const { movieTitle, rating, description, moviePoster, onBoxClick } = props;
     const classes = useStyle();
+
     return (
         <Paper className={classes.border} onClick={onBoxClick}>
             <Box>
@@ -29,8 +30,8 @@ const MoviePanel = (props: Props) => {
                             {rating}
                         </Typography>
                     </Box>
-                    <Box>
-                        <Typography className={classes.movieDescription}>
+                    <Box className="movieDescription">
+                        <Typography className={`${classes.movieDescription} `}>
                             {description}
                         </Typography>
                     </Box>
@@ -41,3 +42,4 @@ const MoviePanel = (props: Props) => {
 }
 
 export default MoviePanel
+

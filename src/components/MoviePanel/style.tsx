@@ -13,7 +13,8 @@ const useStyle = makeStyles((theme: any) => ({
         '&::-webkit-scrollbar-thumb': {
         },
         overflowY: 'auto',
-        maxHeight: '370px'
+        cursor:'pointer'
+        // maxHeight: '370px'
     },
     blankImg: {
         height: '250px',

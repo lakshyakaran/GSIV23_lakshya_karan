@@ -27,6 +27,12 @@ export default function Navigation(props: Props) {
                                     placeholder="Search"
                                     id="outlined-start-adornment"
                                     onChange={(event: any) => onSearchChange(event.target.value)}
+                                    onKeyPress={(ev) => {
+                                        if (ev.key === 'Enter') {
+                                            onSearchClick()
+                                        }
+                                    }}
+
                                     InputProps={{
                                         startAdornment:
                                             <InputAdornment position="start"

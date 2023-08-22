@@ -8,18 +8,25 @@
 }
 .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-formControl {
   height: 40px;
- width: 100%;
+  width: 100%;
   border-radius: 8px;
-  background-color: #DFDFDF;
-  border-color: #DFDFDF
+  background-color: #dfdfdf;
+  border-color: #dfdfdf;
 }
 .MuiInputBase-root.MuiOutlinedInput-root.Mui-focused.MuiInputBase-colorPrimary.MuiInputBase-formControl {
-  border-color: #DFDFDF !important;
+  border-color: #dfdfdf !important;
+}
+
+.movieDescription {
+  max-height: 2.6em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* white-space: nowrap; */
 }
 
 .MuiFormControl-root.MuiTextField-root {
-  width:40%;
-  border-color: #DFDFDF
+  width: 40%;
+  border-color: #dfdfdf;
 }
 
 @media (prefers-reduced-motion: no-preference) {
