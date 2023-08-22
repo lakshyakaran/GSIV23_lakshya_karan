@@ -7,6 +7,10 @@ const useStyle = makeStyles((theme: any) => ({
     blankImg: {
         height: '250px', backgroundColor: '#DFDFDF'
     },
+    image: {
+        height: '100%',
+        width: '100%'
+    },
     spacing: {
         padding: '5px 5px 10px 5px'
     },
