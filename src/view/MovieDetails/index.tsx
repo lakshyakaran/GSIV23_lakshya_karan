@@ -1,11 +1,32 @@
 import Container from '../../components/Container';
-import { Box, Typography, Grid } from '@mui/material';
+import { Box, Typography, Grid, Skeleton } from '@mui/material';
+import { useParams } from 'react-router-dom';
 import useStyle from './style';
+import useApi from '../../hook/UseFetch';
+import moment from 'moment'
+
+interface MovieList {
+    id: number;
+    title: string;
+    poster_path: string;
+    overview: string;
+    vote_average: string;
+    release_date: string;
+    status: string;
+    runtime: any;
+}
+
+
+
 
 const MovieDetails = () => {
     const classes = useStyle();
-    return (
-        <Container>
+    const { movieId } = useParams();
+    let apiUrl = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+    const { data, loading } = useApi<MovieList>(apiUrl);
+
+    const renderLoading = () => {
+        return (
             <Grid container spacing={2}>
                 <Grid item lg={2} md={2}>
                     <Box className={classes.blankImg}>
@@ -15,33 +36,97 @@ const MovieDetails = () => {
                     <Box className={classes.column}>
                         <Box className={classes.dCenter}>
                             <Typography className={classes.movieTitle}>
-                                Movie Title
+                                <Skeleton width={50} />
                             </Typography>
                             <Typography className={classes.movieRating}>
-                                (Rating)
+                                <Skeleton width={50} />
                             </Typography>
                         </Box>
                         <Box className={classes.dCenter}>
                             <Typography className={classes.movieDesc}>
-                                Year |
+                                <Skeleton width={50} />
                             </Typography>
                             <Typography className={`${classes.movieDesc} ${classes.ml5}`}>
-                                Length |
+                                <Skeleton width={50} />
                             </Typography>
                             <Typography className={`${classes.movieDesc} ${classes.ml5}`}>
-                                Director
+                                <Skeleton width={50} />
                             </Typography>
                         </Box>
                         <Box className={classes.dFlex}>
                             <Typography className={classes.movieDesc}>
-                                Description:  Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                                <Skeleton width={50} />
                             </Typography>
                         </Box>
                     </Box>
                 </Grid>
             </Grid>
+        )
+    };
+
+    const renderContent = () => {
+        return (
+            <Grid container spacing={2}>
+                <Grid item lg={2} md={2}>
+                    <Box className={classes.blankImg}>
+                    </Box>
+                </Grid>
+                <Grid item lg={6} md={6}>
+                    <Box className={classes.column}>
+                        <Box className={classes.dCenter}>
+                            <Typography className={classes.movieTitle}>
+                                {data?.title}
+                            </Typography>
+                            <Typography className={classes.movieRating}>
+                                ({data?.vote_average})
+                            </Typography>
+                        </Box>
+                        <Box className={classes.dCenter}>
+                            <Typography className={classes.movieDesc}>
+                                {moment(data?.release_date).format('DD-MM-YYYY')} |
+                            </Typography>
+                            <Typography className={`${classes.movieDesc} ${classes.ml5}`}>
+                                {convertMinutesToHours(data?.runtime)} |
+                            </Typography>
+                            <Typography className={`${classes.movieDesc} ${classes.ml5}`}>
+                                {data?.status}
+                            </Typography>
+                        </Box>
+                        <Box className={classes.dFlex}>
+                            <Typography className={classes.movieDesc}>
+                                {data?.overview}
+                            </Typography>
+                        </Box>
+                    </Box>
+                </Grid>
+            </Grid>
+        )
+    };
+
+    return (
+        <Container
+            onSearchClick={null}
+            onSearchChange={null}
+        >
+            {
+                loading ? (
+                    renderLoading()
+                ) : (
+                    renderContent()
+                )
+            }
         </Container>
     )
+}
+
+function convertMinutesToHours(minutes: string): string {
+    const hours = Math.floor(parseInt(minutes) / 60);
+    const remainingMinutes = parseInt(minutes) % 60;
+
+    const hoursText = hours > 0 ? `${hours}h` : '';
+    const minutesText = remainingMinutes > 0 ? `${remainingMinutes}m` : '';
+
+    return `${hoursText}:${minutesText}`.trim();
 }
 
 export default MovieDetails

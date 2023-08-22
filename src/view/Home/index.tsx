@@ -1,36 +1,38 @@
-import { useEffect } from 'react';
-import { Grid, Skeleton } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, Grid, Skeleton, Typography } from '@mui/material';
 import Container from '../../components/Container'
 import MoviePanel from '../../components/MoviePanel';
 import { useNavigate } from 'react-router-dom';
-import useApi from '../../hook/UseFetch';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMovies } from '../../features/Slice/movie';
+import { retrieveSearch } from '../../api/Search';
+import { movieList } from '../../api/MovieList';
 
-interface MovieList {
-    id: number;
-    title: string;
-    poster_path: string;
-    overview: string;
-    vote_average: string;
-}
-
-interface Item {
-    result: MovieList[];
-}
 
 const Home = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [searchValue, setSearchValue] = useState('')
+    const [loading, setLoading] = useState(true)
     const { moviesList } = useSelector((state: any) => state?.movies);
-    let apiUrl = 'https://api.themoviedb.org/3/discover/movie';
-    const { data, loading, error } = useApi<Item>(apiUrl);
-    console.log("moviesList", moviesList)
+    
     useEffect(() => {
-        if (data) {
-            dispatch(setMovies(data))
+        if (searchValue === '') {
+            movieList().then((res: any) => {
+                setLoading(false)
+                dispatch(setMovies(res))
+            })
         }
-    }, [data])
+
+    }, [searchValue])
+
+    const handleSearch = () => {
+        setLoading(true)
+        retrieveSearch(searchValue).then((res: any) => {
+            setLoading(false)
+            dispatch(setMovies(res))
+        })
+    }
 
     const renderLoading = () => {
         const content = [];
@@ -74,12 +76,12 @@ const Home = () => {
             <>
                 {moviesList?.results?.map((item: any) => {
                     return (
-                        <Grid item lg={2} md={2}>
+                        <Grid item lg={2} md={2} key={item.id}>
                             <MoviePanel
                                 key={item.id}
                                 onBoxClick={() => navigate(`/movie-details/${item.id}`)}
                                 movieTitle={item.title}
-                                rating={item.vote_average}
+                                rating={(item.vote_average)}
                                 description={item.overview}
                                 // moviePoster={`${apiUrl}${item.backdrop_path}`}
                                 moviePoster={null}
@@ -91,15 +93,30 @@ const Home = () => {
         )
     };
 
+    const renderNoData = () =>{
+        return(
+            <Box sx={{ display: 'flex', justifyContent: 'center',marginTop:'40px',width:'100%'  }}>
+                <Typography sx={{color:'#CF3721'}}>No Data Found!</Typography>
+            </Box>
+        )
+    }
+
     return (
-        <Container>
+        <Container
+            onSearchClick={handleSearch}
+            onSearchChange={(val: any) => setSearchValue(val)}
+        >
             <Grid container spacing={2}>
                 {
                     loading ? (
                         renderLoading()
-                    ) : (
-                        renderContent()
-                    )
+                    ) :
+                        moviesList.results.length === 0 ? (
+                           renderNoData()
+                        ) :
+                            (
+                                renderContent()
+                            )
                 }
             </Grid>
         </Container>
